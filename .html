@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>只只的个人宣传网页</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6a82fb;
+            --secondary-color: #fc5c7d;
+            --text-color: #fff;
+            --background-gradient: linear-gradient(to right, #6a82fb, #fc5c7d);
+        }
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-color);
+            scroll-behavior: smooth;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 0;
+            background: var(--background-gradient);
+            text-align: center;
+            font-family: 'Noto Sans SC', sans-serif;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.3s;
+        }
+        header.scrolled {
+            background-color: rgba(106, 130, 251, 0.9);
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 100px;
+        }
+        .section {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-attachment: fixed;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .section:nth-child(odd) {
+            background: var(--background-gradient);
+        }
+        .section:nth-child(even) {
+            background: var(--primary-color);
+        }
+        h1, h2 {
+            margin: 0.67em 0;
+        }
+        p {
+            font-size: 18px;
+            max-width: 600px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        .profile-image {
+            width: 150px;
+            height: auto;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease-in-out;
+        }
+        .profile-image:hover {
+            transform: scale(1.1);
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #fff;
+            color: var(--primary-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+        a {
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <header id="header">只只的宣传页面</header>
+    <div class="container">
+        <div class="section">
+            <img src="033.jpg" alt="Profile Image" class="profile-image">
+            <h1>只只</h1>
+            <p>欢迎来到我的个人宣传网页！这里你可以了解到我的个人信息，我的成就和我对社交媒体的影响。</p>
+            <a href="#intro" class="btn">了解更多</a>
+        </div>
+        <div id="intro" class="section">
+            <h2>个人简介</h2>
+            <p>只只，出生于2002年，中国互联网名人，以其独特的内容创造和社交媒体活动而闻名，拥有数百万粉丝。她不仅是一个有影响力的内容创作者，还是多家品牌的代言人。</p>
+            <a href="#personality" class="btn">性格特点</a>
+        </div>
+        <div id="personality" class="section">
+            <h2>性格</h2>
+            <p>我是一个充满活力和乐观的人。我热爱生活，喜欢挑战新事物。我与人交往时总是保持开放和友好的态度。我的粉丝们喜欢我因为我真诚和有感染力的个性。</p>
+            <a href="#hobbies" class="btn">爱好</a>
+        </div>
+        <div id="hobbies" class="section">
+            <h2>爱好</h2>
+            <p>我的兴趣广泛，从音乐、电影到户外活动。我特别喜欢旅行和摄影，这让我可以探索新的地方并捕捉生活中的美好瞬间。此外，我还热衷于阅读，尤其是心理学和自我提升类的书籍。</p>
+            <a href="#contact" class="btn">联系方式</a>
+        </div>
+        <div id="contact" class="section">
+            <h2>联系方式</h2>
+            <p>Email: <a href="mailto:zhizhi@example.com" class="btn">zhizhi@example.com</a></p>
+            <p>微信: <a href="https://example.com/wechat" target="_blank" class="btn">zhizhi2024</a></p>
+        </div>
+    </div>
+    <script>
+        let header = document.getElementById('header');
+        window.onscroll = function() {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        };
+
+        let sections = document.querySelectorAll('.section');
+        let observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, {
+            threshold: 0.5 // Trigger when 50% of the element is visible
+        });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
